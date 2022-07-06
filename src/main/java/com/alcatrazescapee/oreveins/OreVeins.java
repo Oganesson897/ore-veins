@@ -7,6 +7,7 @@
 package com.alcatrazescapee.oreveins;
 
 
+import com.alcatrazescapee.oreveins.cmd.CommandReloadVeins;
 import org.apache.logging.log4j.Logger;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
@@ -86,6 +87,7 @@ public class OreVeins
         if (OreVeinsConfig.DEBUG_COMMANDS)
         {
             event.registerServerCommand(new CommandClearWorld());
+            event.registerServerCommand(new CommandReloadVeins());
             event.registerServerCommand(new CommandVeinInfo());
             event.registerServerCommand(new CommandFindVeins());
         }

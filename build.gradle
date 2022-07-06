@@ -1,33 +1,24 @@
 buildscript {
     repositories {
-        jcenter()
-        maven { // Forge Gradle
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven { // Curse Forge
-            url "https://plugins.gradle.org/m2/"
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "https://files.minecraftforge.net/maven"
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.1.0'
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
     }
 }
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'com.matthewprenger.cursegradle'
 
-version = "${mod_version}"
-group = "com.alcatrazescapee.oreveins" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+apply plugin: "net.minecraftforge.gradle.forge"
+
+group = "com.alcatrazescapee.oreveins"
+version = '1.12.2-2.0.15'
 archivesBaseName = "oreveins"
 
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
-
 minecraft {
-    version = "${mc_version}-${forge_version}"
+    version = project.forgeVersion
     runDir = "run"
 
     // the mappings can be changed at any time, and must be in the following format.
@@ -35,10 +26,28 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20171003"
-    makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    mappings = project.mcpVersion
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
-    replace 'GRADLE:VERSION', "${mod_version}"
+    def args = [
+            "-Dmixin.debug.export=true",
+            '-Dmixin.hotSwap=true',
+            '-Dmixin.checks.interfaces=true'
+    ]
+
+    clientJvmArgs.addAll(args)
+    serverJvmArgs.addAll(args)
+}
+
+repositories {
+    mavenCentral()
+
+    //  CurseForge
+    maven{ url "https://www.cursemaven.com" }
+}
+
+dependencies {
+
 }
 
 processResources {
@@ -48,29 +57,14 @@ processResources {
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else except the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
+        include "mcmod.info"
 
-curseforge {
-    def envApiKey = System.getenv('CURSEFORGE_API_KEY')
-    if (envApiKey == null) {
-        println 'Unable to locate api key in env variable'
-        return
+        // replace version and mcversion
+        expand "version": project.version, "mcversion": project.minecraft.version
     }
-    project {
-        apiKey = envApiKey
-        id = '296887'
-        changelog = file('changelog.txt')
-        releaseType = "${mod_release_type}"
-        addGameVersion "${mc_version}"
+
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "mcmod.info"
     }
 }

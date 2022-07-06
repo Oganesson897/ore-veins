@@ -124,7 +124,7 @@ public abstract class AbstractVeinType<V extends AbstractVein<?>> implements IVe
         for (String s : biomes)
         {
             //noinspection ConstantConditions
-            String biomeName = biome.getRegistryName().getResourcePath();
+            String biomeName = biome.getRegistryName().toString();
             if (biomeName.equals(s))
             {
                 return biomesIsWhitelist;

@@ -123,6 +123,9 @@ public final class VeinRegistry
             return;
         }
 
+        // Clear veins before loading them back
+        if (!VEINS.isEmpty()) VEINS.clear();
+
         for (Path path : recursivePathList)
         {
             try
