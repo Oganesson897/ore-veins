@@ -35,11 +35,9 @@ public interface IVeinType<V extends IVein<?>>
      * Gets the state to generate at a point.
      * Handled by {@link AbstractVeinType} using a weighted list
      *
-     * @param rand A random to use in generation
-     * @return A block state
      */
     @Nonnull
-    IBlockState getStateToGenerate(Random rand);
+    void generateOre(World world, BlockPos pos, Random rand);
 
     /**
      * Gets all possible ore states spawned by this vein.

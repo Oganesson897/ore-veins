@@ -30,7 +30,6 @@ import com.alcatrazescapee.oreveins.vein.VeinRegistry;
 
 public class WorldGenVeins implements IWorldGenerator
 {
-    private static final Random RANDOM = new Random();
     private static int CHUNK_RADIUS = 0;
 
     public static void resetChunkRadius()
@@ -39,14 +38,14 @@ public class WorldGenVeins implements IWorldGenerator
     }
 
     @Nonnull
-    public static List<IVein> getNearbyVeins(int chunkX, int chunkZ, long worldSeed, int radius)
+    public static List<IVein> getNearbyVeins(Random random, int chunkX, int chunkZ, long worldSeed, int radius)
     {
         List<IVein> veins = new ArrayList<>();
         for (int x = chunkX - radius; x <= chunkX + radius; x++)
         {
             for (int z = chunkZ - radius; z <= chunkZ + radius; z++)
             {
-                RANDOM.setSeed(worldSeed + x * 341873128712L + z * 132897987541L);
+                random.setSeed(worldSeed + x * 341873128712L + z * 132897987541L);
                 getVeinsAtChunk(veins, x, z, worldSeed);
             }
         }
@@ -88,7 +87,7 @@ public class WorldGenVeins implements IWorldGenerator
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
     {
-        List<IVein> veins = getNearbyVeins(chunkX, chunkZ, world.getSeed(), CHUNK_RADIUS);
+        List<IVein> veins = getNearbyVeins(random, chunkX, chunkZ, world.getSeed(), CHUNK_RADIUS);
         if (veins.isEmpty()) return;
 
         int xoff = chunkX * 16 + 8;
@@ -127,8 +126,7 @@ public class WorldGenVeins implements IWorldGenerator
                             }
                             if (vein.getType().canGenerateAt(world, posAt))
                             {
-                                IBlockState oreState = vein.getType().getStateToGenerate(random);
-                                world.setBlockState(posAt, oreState);
+                                vein.getType().generateOre(world, posAt, random);
                                 if (veinIndicator != null && !canGenerateIndicator)
                                 {
                                     int depth = world.getHeight(x, z) - y;

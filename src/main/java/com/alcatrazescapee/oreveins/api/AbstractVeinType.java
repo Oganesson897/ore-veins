@@ -1,8 +1,6 @@
 package com.alcatrazescapee.oreveins.api;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -19,33 +17,41 @@ import com.alcatrazescapee.oreveins.util.IWeightedList;
 import com.alcatrazescapee.oreveins.vein.Indicator;
 import com.alcatrazescapee.oreveins.vein.VeinRegistry;
 
-@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings({"unused", "WeakerAccess", "FieldMayBeFinal"})
 @ParametersAreNonnullByDefault
 public abstract class AbstractVeinType<V extends AbstractVein<?>> implements IVeinType<V>
 {
     protected int count = 1;
     protected int rarity = 10;
+
     @SerializedName("min_y")
     protected int minY = 16;
+
     @SerializedName("max_y")
     protected int maxY = 64;
+
     @SerializedName("use_relative_y")
     protected boolean useRelativeY = false;
+
     @SerializedName("vertical_size")
     protected int verticalSize = 8;
+
     @SerializedName("horizontal_size")
     protected int horizontalSize = 15;
+
     protected float density = 20;
 
     @SerializedName("dimensions_is_whitelist")
     protected boolean dimensionIsWhitelist = true;
+
     @SerializedName("biomes_is_whitelist")
     protected boolean biomesIsWhitelist = true;
 
     @SerializedName("stone")
     private List<IBlockState> stoneStates = null;
+
     @SerializedName("ore")
-    private IWeightedList<IBlockState> oreStates = null;
+    private List<IWeightedList<IBlockState>> oreStates = null;
 
     private List<String> biomes = null;
     private List<Integer> dimensions = null;
@@ -54,16 +60,33 @@ public abstract class AbstractVeinType<V extends AbstractVein<?>> implements IVe
 
     @Nonnull
     @Override
-    public IBlockState getStateToGenerate(Random rand)
+    public void generateOre(World world, BlockPos pos, Random rand)
     {
-        return oreStates.get(rand);
+        for (int i = 0; i < stoneStates.size(); i++)
+        {
+            IBlockState stoneState = world.getBlockState(pos);
+            if (stoneState == stoneStates.get(i))
+            {
+                if (i <= oreStates.size()) {
+                    world.setBlockState(pos, oreStates.get(i).get(rand));
+                }
+            }
+        }
     }
 
     @Nonnull
     @Override
     public Collection<IBlockState> getOreStates()
     {
-        return oreStates.values();
+        Collection<IBlockState> collection;
+        collection = new ArrayList<>(Collections.emptyList());
+
+        for (IWeightedList<IBlockState> oreState : oreStates)
+        {
+            collection.addAll(oreState.values());
+        }
+
+        return collection;
     }
 
     @Nullable

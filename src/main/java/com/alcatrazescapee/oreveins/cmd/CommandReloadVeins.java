@@ -34,7 +34,8 @@ public class CommandReloadVeins extends CommandBase
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args)
+    {
         sender.sendMessage(new TextComponentString(TextFormatting.GREEN +"Reloading veins..."));
         VeinRegistry.reloadVeins();
     }
