@@ -1,7 +1,7 @@
 {
   "iron_ore_example": {
     "type": "cluster",
-    "ore": "ore:oreIron",
+    "ore": [{"ore":"oreIron"}],
     "stone": "minecraft:stone",
     "indicator": {
       "blocks": {
@@ -16,7 +16,7 @@
   },
   "gold_ore_example": {
     "type": "cone",
-    "ore": "minecraft:gold_ore",
+    "ore": [{"block":"minecraft:gold_ore"}],
     "stone": "minecraft:stone",
     "rarity": 30,
     "min_y": 8,
@@ -53,7 +53,7 @@
   },
   "redstone_ore_example": {
     "type": "cluster",
-    "ore": "minecraft:redstone_ore",
+    "ore": [{"block":"minecraft:redstone_ore"}],
     "stone": "minecraft:stone",
     "rarity": 30,
     "min_y": 0,
@@ -64,7 +64,7 @@
   },
   "emerald_ore_example": {
     "type": "cluster",
-    "ore": "minecraft:emerald_ore",
+    "ore": [{"block":"minecraft:emerald_ore"}],
     "stone": "minecraft:stone",
     "rarity": 10,
     "count": 3,
