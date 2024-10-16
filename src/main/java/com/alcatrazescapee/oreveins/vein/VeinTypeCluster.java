@@ -19,7 +19,7 @@ import com.alcatrazescapee.oreveins.api.AbstractVeinType;
 @ParametersAreNonnullByDefault
 public class VeinTypeCluster extends AbstractVeinType<VeinTypeCluster.VeinCluster>
 {
-    int clusters = 3;
+    public int clusters = 3;
 
     @Override
     public float getChanceToGenerate(VeinCluster vein, BlockPos pos)

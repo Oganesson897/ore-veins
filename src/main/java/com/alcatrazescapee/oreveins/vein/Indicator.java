@@ -19,17 +19,17 @@ import com.alcatrazescapee.oreveins.util.IWeightedList;
 public class Indicator
 {
     @SerializedName("max_depth")
-    private int maxDepth = 32;
-    private int rarity = 10;
+    public int maxDepth = 32;
+    public int rarity = 10;
     @SerializedName("ignore_vegetation")
-    private boolean ignoreVegetation = true;
+    public boolean ignoreVegetation = true;
     @SerializedName("ignore_liquids")
-    private boolean ignoreLiquids = false;
+    public boolean ignoreLiquids = false;
 
     @SerializedName("blocks")
-    private IWeightedList<IBlockState> states = null;
+    public IWeightedList<IBlockState> states = null;
     @SerializedName("blocks_under")
-    private List<IBlockState> underStates = null;
+    public List<IBlockState> underStates = null;
 
     @Nonnull
     public IBlockState getStateToGenerate(Random random)

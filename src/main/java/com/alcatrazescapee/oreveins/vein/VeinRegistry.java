@@ -37,7 +37,7 @@ import static com.alcatrazescapee.oreveins.OreVeins.MOD_ID;
 
 public final class VeinRegistry
 {
-    private static final BiMap<String, IVeinType> VEINS = HashBiMap.create();
+    public static final BiMap<String, IVeinType> VEINS = HashBiMap.create();
     private static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(IVeinType.class, new VeinTypeDeserializer())
             .registerTypeAdapter(new TypeToken<List<IBlockState>>() {}.getType(), new BlockStateListDeserializer())

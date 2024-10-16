@@ -17,8 +17,8 @@ import com.alcatrazescapee.oreveins.api.AbstractVeinType;
 @ParametersAreNonnullByDefault
 public class VeinTypeCurve extends AbstractVeinType<VeinTypeCurve.VeinCurve>
 {
-    float radius = 5;
-    float angle = 45;
+    public float radius = 5;
+    public float angle = 45;
 
     @Override
     public boolean inRange(VeinCurve vein, int xOffset, int zOffset)

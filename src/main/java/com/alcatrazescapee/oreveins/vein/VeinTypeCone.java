@@ -11,8 +11,8 @@ import com.alcatrazescapee.oreveins.api.DefaultVeinType;
 @ParametersAreNonnullByDefault
 public class VeinTypeCone extends DefaultVeinType
 {
-    float shape = 0.5f;
-    boolean inverted = false;
+    public float shape = 0.5f;
+    public boolean inverted = false;
 
     @Override
     public float getChanceToGenerate(DefaultVein vein, BlockPos pos)

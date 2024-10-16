@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import com.alcatrazescapee.oreveins.util.WeightedList;
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -21,42 +22,42 @@ import com.alcatrazescapee.oreveins.vein.VeinRegistry;
 @ParametersAreNonnullByDefault
 public abstract class AbstractVeinType<V extends AbstractVein<?>> implements IVeinType<V>
 {
-    protected int count = 1;
-    protected int rarity = 10;
+    public int count = 1;
+    public int rarity = 10;
 
     @SerializedName("min_y")
-    protected int minY = 16;
+    public int minY = 16;
 
     @SerializedName("max_y")
-    protected int maxY = 64;
+    public int maxY = 64;
 
     @SerializedName("use_relative_y")
-    protected boolean useRelativeY = false;
+    public boolean useRelativeY = false;
 
     @SerializedName("vertical_size")
-    protected int verticalSize = 8;
+    public int verticalSize = 8;
 
     @SerializedName("horizontal_size")
-    protected int horizontalSize = 15;
+    public int horizontalSize = 15;
 
-    protected float density = 20;
+    public float density = 20;
 
     @SerializedName("dimensions_is_whitelist")
-    protected boolean dimensionIsWhitelist = true;
+    public boolean dimensionIsWhitelist = true;
 
     @SerializedName("biomes_is_whitelist")
-    protected boolean biomesIsWhitelist = true;
+    public boolean biomesIsWhitelist = true;
 
     @SerializedName("stone")
-    private List<IBlockState> stoneStates = null;
+    public List<IBlockState> stoneStates = new ArrayList<>();
 
     @SerializedName("ore")
-    private List<IWeightedList<IBlockState>> oreStates = null;
+    public List<IWeightedList<IBlockState>> oreStates = new ArrayList<>();
 
-    private List<String> biomes = null;
-    private List<Integer> dimensions = null;
-    private List<ICondition> conditions = null;
-    private IWeightedList<Indicator> indicator = null;
+    public List<String> biomes = new ArrayList<>();
+    public List<Integer> dimensions = new ArrayList<>();
+    public List<ICondition> conditions = new ArrayList<>();
+    public IWeightedList<Indicator> indicator = new WeightedList<>();
 
     @Nonnull
     @Override
